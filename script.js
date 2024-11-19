@@ -6,7 +6,7 @@ function enviarImagen() {
     formData.append("imagen", imagen);
 
     // Realizar la solicitud POST al servidor Flask
-    fetch('http://127.0.0.1:5000/procesar-imagen', {  // Asegúrate de que esta URL sea la correcta para tu entorno
+    fetch('https://ypjbot.pythonanywhere.com/procesar-imagen', {  // Asegúrate de que esta URL sea la correcta para tu entorno
         method: 'POST',
         body: formData,
     })
