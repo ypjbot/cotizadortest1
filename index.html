@@ -11,3 +11,19 @@
     <p>Sube tu imagen, selecciona las opciones y obtén tu cotización.</p>
 </body>
 </html>
+<form action="#" method="post" enctype="multipart/form-data">
+    <label for="cantidad">Cantidad de piezas:</label>
+    <input type="number" id="cantidad" name="cantidad" min="1" required><br><br>
+
+    <label for="medidas">Medidas del logo:</label>
+    <select id="medidas" name="medidas" required>
+        <option value="pequeño">Pequeño (5x5 cm)</option>
+        <option value="mediano">Mediano (10x10 cm)</option>
+        <option value="grande">Grande (15x15 cm)</option>
+    </select><br><br>
+
+    <label for="imagen">Subir logo:</label>
+    <input type="file" id="imagen" name="imagen" accept="image/*" required><br><br>
+
+    <button type="submit">Obtener Cotización</button>
+</form>
