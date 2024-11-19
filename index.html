@@ -1,42 +1,26 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Cotizador de Bordados v8</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotizador de Bordados</title>
 </head>
 <body>
-    <h1>Cotizador de Bordados V88</h1>
-    <input type="file" id="imagen" />
-    <button onclick="enviarImagen()">Enviar Imagen</button>
+    <h1>Cotizador de Bordadosv911</h1>
 
-    <div id="resultado"></div>
+    <!-- Formulario para cargar imagen -->
+    <div>
+        <h2>Sube tu logo para obtener el precio del bordado</h2>
+        <input type="file" id="imagen">
+        <button onclick="enviarImagen()">Enviar Imagen</button>
+    </div>
 
-    <script>
-        async function enviarImagen() {
-            const imagenInput = document.getElementById("imagen");
-            const archivo = imagenInput.files[0];
+    <h3>Resultados:</h3>
+    <div id="resultados">
+        <!-- Aquí se mostrarán los resultados de la cotización -->
+    </div>
 
-            if (!archivo) {
-                alert("Por favor, selecciona una imagen.");
-                return;
-            }
-
-            const formData = new FormData();
-            formData.append("imagen", archivo);
-
-            try {
-                const respuesta = await fetch("https://ypjbot.pythonanywhere.com/procesar-imagen", {
-                    method: "POST",
-                    body: formData
-                });
-
-                const datos = await respuesta.json();
-
-                // Mostrar el resultado en el frontend
-                document.getElementById("resultado").innerText = `
-                    Mensaje: ${datos.mensaje}
-                    Etiquetas: ${datos.etiquetas.join(", ")}
-                    Puntuación de Complejidad: ${datos.puntuacion_complejidad}
-                    Precio: ${datos.precio}
-                `;
-            } catch (error) {
-                console.error("
+    <!-- Vincular script.js para manejar la funcionalidad -->
+    <script src="script.js"></script>
+</body>
+</html>
