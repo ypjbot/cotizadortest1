@@ -1,45 +1,42 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cotizador de Bordados77</title>
+    <title>Cotizador de Bordados v8</title>
 </head>
 <body>
-    <h1>Sube tu logo para obtener una cotización78jp</h1>
-    <form id="uploadForm">
-        <input type="file" id="imageInput" name="imagen" accept="image/*" required>
-        <button type="submit">Enviar</button>
-    </form>
+    <h1>Cotizador de Bordados V88</h1>
+    <input type="file" id="imagen" />
+    <button onclick="enviarImagen()">Enviar Imagen</button>
+
     <div id="resultado"></div>
 
     <script>
-        // JavaScript para manejar el envío del formulario
-        const API_URL = "https://ypjbot.pythonanywhere.com/procesar-imagen";
+        async function enviarImagen() {
+            const imagenInput = document.getElementById("imagen");
+            const archivo = imagenInput.files[0];
 
-        document.getElementById("uploadForm").addEventListener("submit", async (event) => {
-            event.preventDefault();
+            if (!archivo) {
+                alert("Por favor, selecciona una imagen.");
+                return;
+            }
 
             const formData = new FormData();
-            const fileInput = document.getElementById("imageInput");
-            formData.append("imagen", fileInput.files[0]);
+            formData.append("imagen", archivo);
 
             try {
-                const response = await fetch(API_URL, {
+                const respuesta = await fetch("https://ypjbot.pythonanywhere.com/procesar-imagen", {
                     method: "POST",
-                    body: formData,
+                    body: formData
                 });
 
-                const result = await response.json();
+                const datos = await respuesta.json();
+
+                // Mostrar el resultado en el frontend
                 document.getElementById("resultado").innerText = `
-                    Mensaje: ${result.mensaje}
-                    Etiquetas: ${result.etiquetas.join(", ")}
-                    Puntuación de Complejidad: ${result.puntuacion_complejidad}
-                    Precio: ${result.precio}
+                    Mensaje: ${datos.mensaje}
+                    Etiquetas: ${datos.etiquetas.join(", ")}
+                    Puntuación de Complejidad: ${datos.puntuacion_complejidad}
+                    Precio: ${datos.precio}
                 `;
             } catch (error) {
-                console.error("Error al enviar la imagen:", error);
-                document.getElementById("resultado").innerText = "Error al procesar la imagen.";
-            }
-        });
-    </script>
-</body>
-</html>
+                console.error("
