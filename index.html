@@ -1,45 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Cotizador de Bordados V5 </title>
-    <link rel="stylesheet" href="style.css">
+    <title>Cotizador de Bordados77</title>
 </head>
 <body>
-    <h1>Cotizador de Bordados V5.1 </h1>
-    <form id="formulario" enctype="multipart/form-data">
-        <label for="imagen">Subir imagen del logo:</label>
-        <input type="file" id="imagen" name="imagen" required><br><br>
-        <button type="submit">Cotizar</button>
+    <h1>Sube tu logo para obtener una cotización78jp</h1>
+    <form id="uploadForm">
+        <input type="file" id="imageInput" name="imagen" accept="image/*" required>
+        <button type="submit">Enviar</button>
     </form>
     <div id="resultado"></div>
 
     <script>
-        document.getElementById("formulario").addEventListener("submit", async function(event) {
+        // JavaScript para manejar el envío del formulario
+        const API_URL = "https://ypjbot.pythonanywhere.com/procesar-imagen";
+
+        document.getElementById("uploadForm").addEventListener("submit", async (event) => {
             event.preventDefault();
 
-            // Obtener el archivo de imagen
-            const imagen = document.getElementById("imagen").files[0];
             const formData = new FormData();
-            formData.append("imagen", imagen);
+            const fileInput = document.getElementById("imageInput");
+            formData.append("imagen", fileInput.files[0]);
 
             try {
-                // Realizar la solicitud a la API
-                const respuesta = await fetch("http://ypjbot/pythonanywhere.com/procesar-imagen", {
+                const response = await fetch(API_URL, {
                     method: "POST",
-                    body: formData
+                    body: formData,
                 });
-                const datos = await respuesta.json();
 
-                // Mostrar el resultado en la página
-                document.getElementById("resultado").innerHTML = `
-                    <h2>Resultado:</h2>
-                    <p><strong>Mensaje:</strong> ${datos.mensaje}</p>
-                    <p><strong>Etiquetas:</strong> ${datos.etiquetas.join(", ")}</p>
-                    <p><strong>Puntuación de Complejidad:</strong> ${datos.puntuacion_complejidad}</p>
-                    <p><strong>Precio:</strong> ${datos.precio}</p>
+                const result = await response.json();
+                document.getElementById("resultado").innerText = `
+                    Mensaje: ${result.mensaje}
+                    Etiquetas: ${result.etiquetas.join(", ")}
+                    Puntuación de Complejidad: ${result.puntuacion_complejidad}
+                    Precio: ${result.precio}
                 `;
             } catch (error) {
-                document.getElementById("resultado").innerHTML = `<p>Error: ${error.message}</p>`;
+                console.error("Error al enviar la imagen:", error);
+                document.getElementById("resultado").innerText = "Error al procesar la imagen.";
             }
         });
     </script>
